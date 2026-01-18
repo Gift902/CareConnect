@@ -3,7 +3,6 @@ import Footer from '../components/Footer'
 import Hero from '../components/Hero'
 import HowItWorks from '../components/HowItWorks'
 import Specialists from '../components/Specialists'
-import Testimonials from '../components/Testimonials'
 import TrustBar from '../components/TrustBar'
 import WhyChooseUs from '../components/TrustBar'
 const Home = () => {
@@ -14,7 +13,6 @@ const Home = () => {
       <HowItWorks />
       <Specialists />
       <WhyChooseUs />
-      <Testimonials />
       <Footer />
     </div>
   )

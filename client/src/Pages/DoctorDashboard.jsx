@@ -2,7 +2,12 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import DoctorChatIcon from '../components/DoctorChatIcon'
 const DoctorDashboard = () => {
-  const [activeTab, setActiveTab] = useState('overview')
+  const [activeTab, setActiveTab] = useState('overview');
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem('doctorToken');
+    navigate('/');
+  }
   return (
     <section className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 py-10">
@@ -20,6 +25,7 @@ const DoctorDashboard = () => {
           <DoctorChatIcon />
 
           <button
+            onClick={handleLogout}
             className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-xl font-semibold shadow"
           >
             Logout
