@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import DoctorChatIcon from '../components/DoctorChatIcon'
 const DoctorDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview')
@@ -19,12 +19,11 @@ const DoctorDashboard = () => {
           <div className="flex items-center gap-6">
           <DoctorChatIcon />
 
-          <Link
-            to="/"
+          <button
             className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-xl font-semibold shadow"
           >
             Logout
-          </Link>
+          </button>
         </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

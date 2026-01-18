@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import UserChatIcon from '../components/UserChatIcon'
 const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview')
+  const navigate = useNavigate();
+    const handleLogout = () => {
+      localStorage.clear();
+      navigate('/', {replace: true});
+    };
   return (
     <section className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 py-10">
@@ -18,12 +23,12 @@ const UserDashboard = () => {
           </div>
         <div className="flex items-center gap-6">
           <UserChatIcon />
-          <Link
-            to="/"
+          <button
+            onClick={handleLogout}
             className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-xl font-semibold shadow"
           >
             Logout
-          </Link>
+          </button>
         </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

@@ -1,7 +1,41 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
+import axios from 'axios';
 const Login = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(' ');
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage(' ');
+    try {
+      const res = await axios.post(
+        'http://localhost:5001/api/Users/login',
+        formData,
+        {headers: {'Content-Type' : 'application/json'}}
+      );
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      toast.success(res.data.message);
+      navigate('/userdashboard');
+    } catch (error) {
+      setMessage(toast.error(error.response?.data?.message) || "Login Failed");
+    }finally{
+      setLoading(false);
+    }
+  };
   return (
     <section className="min-h-screen bg-linear-to-b from-blue-50 to-white flex items-center justify-center px-6">
       <div className="w-full max-w-md bg-white rounded-2xl shadow p-8">
@@ -15,13 +49,16 @@ const Login = () => {
           </p>
         </div>
         {/* Form */}
-        <form className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Email Address
             </label>
             <input
               type="email"
+              name='email'
+              value={formData.email}
+              onChange={handleChange}
               placeholder="you@example.com"
               className="mt-1 w-full pl-4 h-10 rounded-1xl border-gray-300 border focus:ring-blue-500 focus:border-blue-500"
             />
@@ -32,6 +69,9 @@ const Login = () => {
             </label>
             <input
               type="password"
+              name='password'
+              value={formData.password}
+              onChange={handleChange}
               placeholder="••••••••"
               className="mt-1 w-full pl-4 h-10 rounded-1xl border-gray-300 border focus:ring-blue-500 focus:border-blue-500"
             />
@@ -49,12 +89,13 @@ const Login = () => {
             </Link>
           </div>
           {/* Login Button → Link */}
-          <Link
-            to="/userdashboard"
-            className="block text-center w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-semibold shadow"
+          <button
+            type="submit"
+            disabled={loading}
+            className="block w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-semibold shadow"
           >
-            Login
-          </Link>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
         </form>
         {/* Footer */}
         <div className="mt-8 text-center text-sm text-gray-600">

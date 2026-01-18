@@ -59,7 +59,7 @@ const DoctorLogin = () => {
         <div className="mt-8 text-center text-sm text-gray-600">
           Don’t have a doctor account?{' '}
           <Link
-            to="/doctor-signup"
+            to="/doctorsignup"
             className="text-blue-600 hover:underline font-medium"
           >
             Register here
