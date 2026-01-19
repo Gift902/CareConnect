@@ -34,7 +34,7 @@ exports.loginDoctor = async (req, res) => {
         const {email, password} = req.body;
         const doctor = await Doctor.findOne({ email });
         if(!doctor) {
-            return res.staus(404).json({message: "Doctor not found"});
+            return res.status(404).json({message: "Doctor not found"});
         }
         const isMatch = await bcrypt.compare(password, doctor.password);
         if(!isMatch) {

@@ -18,6 +18,7 @@ import DoctorChats from './Pages/DoctorChats'
 import UserChats from './Pages/UserChats'
 import ProtectedRoute from './components/ProtectedRoute';
 import DoctorProtectedRoute from './components/DoctorProtectedRoute';
+import AdminDashboard from './Pages/AdminDashboard';
 const App = () => {
   return (
     <>
@@ -30,6 +31,7 @@ const App = () => {
       <Route path='/signup' element={<Signup />}></Route>
       <Route path='/doctorsignup' element={<DoctorSignup />}></Route>
       <Route path='/doctorlogin' element={<DoctorLogin />}></Route>
+      <Route path='/admindashboard' element={<AdminDashboard />}></Route>
      <Route element={<DoctorProtectedRoute />}>
       <Route path='/doctordashboard' element={<DoctorDashboard />} />
     </Route>

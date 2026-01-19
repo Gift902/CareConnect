@@ -9,7 +9,7 @@ const Hero = () => {
                 <p className="text-lg mb-6">Book trusted doctors in minutes. Easy, secure, anytime.</p>
                 <div className='space-x-5'>
                     <Link to={'/signup'} className="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-xl font-semibold shadow">
-                    Enter as a user
+                    Enter as a patient
                     </Link>
                     <Link to={'/doctorsignup'} className="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-xl font-semibold shadow">
                     Enter as a doctor
