@@ -1,12 +1,31 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview')
-  const navigate = useNavigate()
-  const handleLogout = () => {
-    localStorage.removeItem('adminToken')
-    navigate('/')
-  }
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    const token = localStorage.getItem('adminToken')
+    if (!token) {
+      navigate('/');
+      return
+    }
+    try {
+      await axios.post(
+        'http://localhost:5001/api/admin/logout',
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      )
+      
+    } catch (err) {
+      console.log('Logout failed:', err.response?.data || err.message)
+    } finally {
+      localStorage.removeItem('adminToken')
+      navigate('/adminlogin', { replace: true })
+    }
+}
   return (
     <section className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 py-10">

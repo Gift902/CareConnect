@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
 app.use('/api/Users', UserRoutes);
 app.use('/api/doctors', doctorRoutes);
+app.use('/api/admin', require('./routes/adminRoutes.js'));
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

@@ -19,6 +19,8 @@ import UserChats from './Pages/UserChats'
 import ProtectedRoute from './components/ProtectedRoute';
 import DoctorProtectedRoute from './components/DoctorProtectedRoute';
 import AdminDashboard from './Pages/AdminDashboard';
+import AdminLogin from './Pages/AdminLogin';
+import AdminProtectedRoute from './components/AdminProtectedRoute';
 const App = () => {
   return (
     <>
@@ -31,15 +33,18 @@ const App = () => {
       <Route path='/signup' element={<Signup />}></Route>
       <Route path='/doctorsignup' element={<DoctorSignup />}></Route>
       <Route path='/doctorlogin' element={<DoctorLogin />}></Route>
-      <Route path='/admindashboard' element={<AdminDashboard />}></Route>
+      <Route path='/adminlogin' element={<AdminLogin />}></Route>
      <Route element={<DoctorProtectedRoute />}>
-      <Route path='/doctordashboard' element={<DoctorDashboard />} />
-    </Route>
+        <Route path='/doctordashboard' element={<DoctorDashboard />} />
+      </Route>
       <Route path='/userdashboard' element={
           <ProtectedRoute>
             <UserDashboard />
           </ProtectedRoute>
       }></Route>
+       <Route element={<AdminProtectedRoute />}>
+        <Route path='/admindashboard' element={<AdminDashboard />} />
+      </Route>
       <Route path='/doctorchat' element={<DoctorChat />}></Route>
       <Route path='/userchat' element={<UserChat />}></Route>
       <Route path='/doctorchats' element={<DoctorChats />}></Route>
