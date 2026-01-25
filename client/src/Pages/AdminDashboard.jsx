@@ -54,8 +54,6 @@ const AdminDashboard = () => {
               { key: 'doctors', label: '👨‍⚕️ Doctors' },
               { key: 'patients', label: '👥 Patients' },
               { key: 'appointments', label: '📅 Appointments' },
-              { key: 'specialties', label: '🧠 Specialties' },
-              { key: 'settings', label: '⚙️ Settings' },
             ].map(tab => (
               <button
                 key={tab.key}
@@ -173,38 +171,6 @@ const AdminDashboard = () => {
                       </span>
                     </div>
                   ))}
-                </div>
-              </>
-            )}
-            {/* SPECIALTIES */}
-            {activeTab === 'specialties' && (
-              <>
-                <h2 className="text-2xl font-semibold mb-6">Specialties</h2>
-                <div className="space-y-3 max-w-md">
-                  <input
-                    type="text"
-                    placeholder="New Specialty"
-                    className="w-full pl-4 py-2 border rounded-xl border-gray-300"
-                  />
-                  <button className="bg-blue-600 text-white px-6 py-2 rounded-xl font-semibold">
-                    Add Specialty
-                  </button>
-                </div>
-              </>
-            )}
-            {/* SETTINGS */}
-            {activeTab === 'settings' && (
-              <>
-                <h2 className="text-2xl font-semibold mb-6">System Settings</h2>
-                <div className="space-y-4 max-w-lg">
-                  <input
-                    type="number"
-                    placeholder="Max appointments per doctor/day"
-                    className="w-full pl-4 py-2 border rounded-xl border-gray-300"
-                  />
-                  <button className="bg-blue-600 text-white px-6 py-2 rounded-xl font-semibold">
-                    Save Settings
-                  </button>
                 </div>
               </>
             )}
