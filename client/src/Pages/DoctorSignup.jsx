@@ -10,23 +10,38 @@ const DoctorSignup = () => {
     licenseNumber: '',
     phoneNumber: '',
     password: '',
-    cv: null
+    cv: null,
+    image: null
   });
   const navigate = useNavigate();
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === 'cv') {
-      setFormData(prev => ({ ...prev, cv: files[0] }));
-    }else {
-      setFormData(prev => ({ ...prev, [name]: value}));
+    if (name === 'cv' || name === 'image') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: files[0]
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
     }
+  };
+   const handleFileChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.files[0] });
   };
   const handleSubmit = async e => {
     e.preventDefault();
     const data = new FormData();
-    for (let key in formData) {
-      data.append(key, formData[key]);
-    }
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    data.append("speciality", formData.speciality);
+    data.append("phoneNumber", formData.phoneNumber);
+    data.append("licenseNumber", formData.licenseNumber);
+    data.append("password", formData.password);
+    data.append("cv", formData.cv);
+    data.append("image", formData.image);
     try {
       const res = await axios.post('http://localhost:5001/api/doctors/register',
         data
@@ -61,6 +76,7 @@ const DoctorSignup = () => {
               <input
                 type="text"
                 name='name'
+                value={formData.name}
                 onChange={handleChange}
                 placeholder="Dr. John Doe"
                 className="mt-1 w-full h-10 border pl-4 rounded-xl border-gray-300 focus:ring-blue-500 focus:border-blue-500"
@@ -73,6 +89,7 @@ const DoctorSignup = () => {
               <input
                 type="email"
                 name='email'
+                value={formData.email}
                 onChange={handleChange}
                 placeholder="doctor@example.com"
                 className="mt-1 w-full h-10 border pl-4 rounded-xl border-gray-300 focus:ring-blue-500 focus:border-blue-500"
@@ -88,6 +105,7 @@ const DoctorSignup = () => {
               <input
                 type="text"
                 name='speciality'
+                value={formData.speciality}
                 onChange={handleChange}
                 placeholder="Cardiology"
                 className="mt-1 w-full h-10 border pl-4 rounded-xl border-gray-300 focus:ring-blue-500 focus:border-blue-500"
@@ -100,6 +118,7 @@ const DoctorSignup = () => {
               <input
                 type="text"
                 name='licenseNumber'
+                value={formData.licenseNumber}
                 onChange={handleChange}
                 placeholder="Medical License ID"
                 className="mt-1 w-full h-10 border pl-4 rounded-xl border-gray-300 focus:ring-blue-500 focus:border-blue-500"
@@ -115,6 +134,7 @@ const DoctorSignup = () => {
               <input
                 type="tel"
                 name='phoneNumber'
+                value={formData.phoneNumber}
                 onChange={handleChange}
                 placeholder="+250 7xx xxx xxx"
                 className="mt-1 w-full h-10 border pl-4 rounded-xl border-gray-300 focus:ring-blue-500 focus:border-blue-500"
@@ -127,7 +147,7 @@ const DoctorSignup = () => {
               <input
                 type="file"
                 name='cv'
-                onChange={handleChange}
+                onChange={handleFileChange}
                 placeholder="HealthBook Clinic"
                 className="mt-1 w-full h-10 border pl-4 rounded-xl border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               />
@@ -142,8 +162,21 @@ const DoctorSignup = () => {
               <input
                 type="password"
                 name='password'
+                value={formData.password}
                 onChange={handleChange}
                 placeholder="••••••••"
+                className="mt-1 w-full h-10 border pl-4 rounded-xl border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Profile Image
+              </label>
+              <input
+                type="file"
+                name='image'
+                onChange={handleFileChange}
+                placeholder="HealthBook Clinic"
                 className="mt-1 w-full h-10 border pl-4 rounded-xl border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>

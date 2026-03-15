@@ -1,36 +1,23 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-const doctors = [
-  {
-    id: 1,
-    name: 'Dr. John Doe',
-    specialty: 'Cardiology',
-    image: '/imgs/doctor1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Dr. Jane Smith',
-    specialty: 'Dermatology',
-    image: '/imgs/doctor2.jpg',
-  },
-  {
-    id: 3,
-    name: 'Dr. Alex Brown',
-    specialty: 'Pediatrics',
-    image: '/imgs/doctor3.jpg',
-  },
-  {
-    id: 4,
-    name: 'Dr. Maria Johnson',
-    specialty: 'Neurology',
-    image: '/imgs/doctor4.jpg',
-  },
-]
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 const Doctors = () => {
+  const [doctors, setDoctors] = useState([]);
+  useEffect(() => {
+    const fetchedDoctors = async () => {
+      try {
+        const res = await axios.get("http://localhost:5001/api/doctors");
+        console.log(res.data);
+        setDoctors(res.data);
+      } catch (error) {
+        console.error("Failed to fetch doctors", error);
+      }
+    };
+    fetchedDoctors();
+  }, []);
   return (
     <section className="bg-linear-to-b from-blue-50 to-white py-20">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
             Our Doctors
@@ -39,18 +26,17 @@ const Doctors = () => {
             Choose a specialist and book your appointment easily
           </p>
         </div>
-        {/* Doctors Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {doctors.map((doctor) => (
             <div
-              key={doctor.id}
+              key={doctor._id}
               className="bg-white rounded-2xl shadow-2xl hover:shadow-lg transition"
             >
               {/* Image */}
               <img
-                src={doctor.image}
-                alt={doctor.name}
-                className="w-full h-56 object-cover rounded-t-2xl"
+                src = {`http://localhost:5001/uploads/images/${doctor.image}`}
+                alt="doctor-image"
+                className="w-full h-90 sm:h-48 md:h-56 lg:h-64  bg-gray-100 rounded-t-2xl overflow-hidden flex items-center justify-center"
               />
               {/* Content */}
               <div className="p-6 text-center">
@@ -58,7 +44,7 @@ const Doctors = () => {
                   {doctor.name}
                 </h3>
                 <p className="text-gray-600 mt-1">
-                  {doctor.specialty}
+                  {doctor.speciality}
                 </p>
                 <Link
                   to={`/userchat`}

@@ -1,9 +1,42 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 const AdminDashboard = () => {
-  const [activeTab, setActiveTab] = useState('overview')
+  const [activeTab, setActiveTab] = useState('overview');
+  const [doctorCount, setDoctorCount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  useEffect(() => {
+    const fetchDoctorCount = async () => {
+      try {
+        const res = await axios.get(
+          'http://localhost:5001/api/doctors/count'
+        );
+        setDoctorCount(res.data.totalDoctors);
+      } catch (error) {
+        console.error('Failed to fetch doctor count', error);
+      }finally {
+        setLoading(false);
+      }
+    };
+    fetchDoctorCount();
+  }, []);
+  useEffect(() => {
+    const fetchUserCount = async () => {
+      try {
+        const res = await axios.get(
+          'http://localhost:5001/api/Users/counts'
+        );
+        setUserCount(res.data.totalUsers);
+      } catch (error) {
+        console.error('Failed to fetch user count', error);
+      }finally {
+        setLoading(false);
+      }
+    };
+    fetchUserCount();
+  }, []);
   const handleLogout = async () => {
     const token = localStorage.getItem('adminToken')
     if (!token) {
@@ -18,7 +51,6 @@ const AdminDashboard = () => {
           headers: { Authorization: `Bearer ${token}` }
         }
       )
-      
     } catch (err) {
       console.log('Logout failed:', err.response?.data || err.message)
     } finally {
@@ -78,11 +110,19 @@ const AdminDashboard = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                   <div className="p-6 rounded-xl bg-blue-50">
                     <h3 className="text-gray-600">Total Doctors</h3>
-                    <p className="text-3xl font-bold text-blue-600 mt-2">42</p>
+                    {loading ? (
+                      <p className='text-lg'>...</p>
+                    ) : (
+                      <p className='text-3xl font-bold text-blue-600'>{doctorCount}</p>
+                    )}
                   </div>
                   <div className="p-6 rounded-xl bg-green-50">
                     <h3 className="text-gray-600">Total Patients</h3>
-                    <p className="text-3xl font-bold text-green-600 mt-2">310</p>
+                    {loading ? (
+                      <p className='text-lg'>...</p>
+                    ) : (
+                      <p className='text-3xl font-bold text-green-600 mt-2'>{userCount}</p>
+                    )}
                   </div>
                   <div className="p-6 rounded-xl bg-orange-50">
                     <h3 className="text-gray-600">Pending Approvals</h3>
