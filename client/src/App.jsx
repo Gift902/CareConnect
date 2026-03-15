@@ -36,23 +36,19 @@ const App = () => {
       <Route path='/adminlogin' element={<AdminLogin />}></Route>
      <Route element={<DoctorProtectedRoute />}>
         <Route path='/doctordashboard' element={<DoctorDashboard />} />
+        <Route path='/doctorchat' element={<DoctorChat />}></Route>
+        <Route path='/doctorchats' element={<DoctorChats />}></Route>
       </Route>
-      <Route path='/userdashboard' element={
-          <ProtectedRoute>
-            <UserDashboard />
-          </ProtectedRoute>
-      }></Route>
+      <Route path='/userdashboard' element={<ProtectedRoute><UserDashboard /></ProtectedRoute>}></Route>
+      <Route path='/userchat' element={<ProtectedRoute><UserChat /></ProtectedRoute>}></Route>
+      <Route path='/userchats' element={<ProtectedRoute><UserChats /></ProtectedRoute>}></Route>
        <Route element={<AdminProtectedRoute />}>
         <Route path='/admindashboard' element={<AdminDashboard />} />
       </Route>
-      <Route path='/doctorchat' element={<DoctorChat />}></Route>
-      <Route path='/userchat' element={<UserChat />}></Route>
-      <Route path='/doctorchats' element={<DoctorChats />}></Route>
-      <Route path='/userchats' element={<UserChats />}></Route>
     </Routes>
     <ToastContainer
         position="top-right"
-        autoClose={1000} // close after 3 seconds
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
